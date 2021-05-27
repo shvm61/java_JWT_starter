@@ -1,38 +1,49 @@
 package com.project.bookMyShow.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "username", unique = true)
     private String userName;
+
+    @JsonIgnore
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "email", unique = true)
+    private String email;
 
     public User() {
     }
 
-    private String password;
-    private String email;
-
-    public int getId() {
-        return id;
-    }
-
-    public User(int id, String userName, String password, String email) {
-        this.id = id;
+    public User(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;
         this.email = email;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getUserName() {
         return userName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setUserName(String userName) {
@@ -53,6 +64,11 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User [email=" + email + ", id=" + id + ", password=" + password + ", userName=" + userName + "]";
     }
 
 }
