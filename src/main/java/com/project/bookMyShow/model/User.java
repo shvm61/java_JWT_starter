@@ -1,5 +1,7 @@
 package com.project.bookMyShow.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class User {
@@ -24,6 +29,16 @@ public class User {
 
     @Column(name = "email", unique = true)
     private String email;
+
+    @JsonIgnore
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @JsonIgnore
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
     public User() {
     }
@@ -64,11 +79,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "User [email=" + email + ", id=" + id + ", password=" + password + ", userName=" + userName + "]";
     }
 
 }
